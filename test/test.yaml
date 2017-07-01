@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   owncloud:
-    image: erwin82/owncloud:latest
+    image: erwin82/cloud-muellerpublic-de:latest
     user: "33:33"
     depends_on:
       - mysql
