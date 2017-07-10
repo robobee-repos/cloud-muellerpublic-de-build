@@ -1,4 +1,4 @@
-FROM erwin82/owncloud:10.0.2-fpm-r3
+FROM erwin82/owncloud:10.0.2-fpm-r4-2
 LABEL maintainer "Erwin Mueller <erwin.mueller@deventm.com>"
 
 USER root
@@ -20,4 +20,4 @@ WORKDIR $WEB_ROOT
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-CMD ["supervisord", "-n", "-c", "/etc/supervisord.conf"]
+CMD ["php-fpm"]
