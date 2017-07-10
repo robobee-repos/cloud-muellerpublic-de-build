@@ -5,6 +5,9 @@ function create_config() {
   if [ -e "$WEB_ROOT/config/config.php" ]; then
     return
   fi
+  if [ ! -d "$WEB_ROOT/config" ]; then
+    mkdir -p "$WEB_ROOT/config"
+  fi
   cd "$WEB_ROOT/config"
   cat <<EOF > config.php
 <?php
