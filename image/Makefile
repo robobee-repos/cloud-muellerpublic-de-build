@@ -1,6 +1,6 @@
 REPOSITORY := erwin82
 NAME := cloud-muellerpublic-de
-VERSION ?= v4
+VERSION ?= v5
 
 build: _build ##@targets Builds the docker image.
 
