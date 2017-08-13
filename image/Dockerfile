@@ -1,4 +1,4 @@
-FROM erwin82/owncloud:v10.0.2-fpm-r5
+FROM erwin82/owncloud:v10.0.2-fpm-r6-1
 LABEL maintainer "Erwin Mueller <erwin.mueller@deventm.com>"
 
 USER root
