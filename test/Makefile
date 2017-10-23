@@ -1,14 +1,13 @@
 include ../utils/Makefile.help
 include ../utils/Makefile.functions
 
-NAME := cloud-muellerpublic-de
-ROOT_DIR:=$(shell realpath root)
-NGINX_CONF_DIR:=$(shell realpath nginx-in)
+export NAME := owncloud
+export ROOT_DIR := $(shell realpath ./root)
+export NGINX_CONF_DIR := $(shell realpath ./nginx-in)
 
 test: setup ##@targets Starts docker compose.
-	export ROOT_DIR="$(ROOT_DIR)" \
-	&& export NGINX_CONF_DIR="$(NGINX_CONF_DIR)" \
-	&& docker-compose -p ${NAME} -f test.yaml up
+	echo $$NAME
+	docker-compose -p ${NAME} -f test.yaml up
 .PHONY: test
 
 clean: rm ##@targets Removes docker containers and created files.
@@ -18,10 +17,8 @@ clean: rm ##@targets Removes docker containers and created files.
 .PHONY: clean
 
 rm: ##@targets Removes docker containers.
-	export ROOT_DIR="$(ROOT_DIR)" \
-	&& export NGINX_CONF_DIR="$(NGINX_CONF_DIR)" \
-	&& docker-compose -p ${NAME} -f test.yaml stop \
-	&& docker-compose -p ${NAME} -f test.yaml rm
+	docker-compose -p ${NAME} -f test.yaml stop
+	docker-compose -p ${NAME} -f test.yaml rm -f
 .PHONY: rm
 
 setup:
@@ -34,7 +31,7 @@ setup:
 	if ! [ -d $(ROOT_DIR)/bitnami/mariadb ]; then \
 	mkdir -p $(ROOT_DIR)/bitnami/mariadb; \
 	fi
-	sudo chown 33:33 -R $(ROOT_DIR)/html
-	sudo chown 33:33 -R $(ROOT_DIR)/data
-	sudo chown 1001:1001 -R $(ROOT_DIR)/bitnami/mariadb
+	sudo chmod o+rwX $(ROOT_DIR)/html
+	sudo chmod o+rwX $(ROOT_DIR)/data
+	sudo chmod o+rwX $(ROOT_DIR)/bitnami/mariadb
 .PHONY: setup

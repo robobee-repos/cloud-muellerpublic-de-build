@@ -1,14 +1,21 @@
 #!/bin/bash
-set -xe
+set -e
+
+EXEC_BASH="bash"
+
+if [[ "$DEBUG" == "true" ]]; then
+  set -x
+  EXEC_BASH="bash -x"
+fi
 
 function create_config() {
-  if [ -e "$WEB_ROOT/config/config.php" ]; then
+  if [ -e "${WEB_ROOT}/config/config.php" ]; then
     return
   fi
-  if [ ! -d "$WEB_ROOT/config" ]; then
-    mkdir -p "$WEB_ROOT/config"
+  if [ ! -d "${WEB_ROOT}/config" ]; then
+    mkdir -p "${WEB_ROOT}/config"
   fi
-  cd "$WEB_ROOT/config"
+  cd "${WEB_ROOT}/config"
   cat <<EOF > config.php
 <?php
 \$CONFIG = array (
@@ -40,6 +47,6 @@ EOF
 
 create_config
 
-cd "$WEB_ROOT"
+cd "${WEB_ROOT}"
 echo "Running as `id`"
-exec bash -x -- /docker-entrypoint-old.sh "$@"
+exec ${EXEC_BASH} -- /docker-entrypoint-old.sh "$@"

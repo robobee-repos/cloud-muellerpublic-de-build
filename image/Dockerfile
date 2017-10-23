@@ -1,14 +1,13 @@
-FROM erwin82/owncloud:v10.0.2-fpm-r6-1
+FROM erwin82/owncloud:v10.0.3-fpm-r1-1
+
 LABEL maintainer "Erwin Mueller <erwin.mueller@deventm.com>"
 
 USER root
 
-ADD rootfs/docker-entrypoint.sh /docker-entrypoint-in.sh
-ADD rootfs/setup.sh /setup.sh
+ADD rootfs/ /
 
 RUN set -x \
-  && chmod +x /setup.sh \
-  && chmod +x /docker-entrypoint-in.sh \
+  && chmod +x /*.sh \
   && mv /docker-entrypoint.sh /docker-entrypoint-old.sh \
   && mv /docker-entrypoint-in.sh /docker-entrypoint.sh
 
