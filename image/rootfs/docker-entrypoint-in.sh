@@ -1,13 +1,6 @@
 #!/bin/bash
 set -e
 
-EXEC_BASH="bash"
-
-if [[ "$DEBUG" == "true" ]]; then
-  set -x
-  EXEC_BASH="bash -x"
-fi
-
 function create_config() {
   if [ -e "${WEB_ROOT}/config/config.php" ]; then
     return
@@ -45,8 +38,9 @@ function create_config() {
 EOF
 }
 
-create_config
-
-cd "${WEB_ROOT}"
+source /docker-entrypoint-utils.sh
+set_debug
 echo "Running as `id`"
-exec ${EXEC_BASH} -- /docker-entrypoint-old.sh "$@"
+create_config
+cd "${WEB_ROOT}"
+exec ${BASH_CMD} -- /docker-entrypoint-old.sh "$@"

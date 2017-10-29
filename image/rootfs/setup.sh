@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xe
+set -e
 
 function setup_owncloud() {
   cd "$WEB_ROOT"
@@ -17,4 +17,6 @@ function setup_owncloud() {
   php occ encryption:enable
 }
 
+source /docker-entrypoint-utils.sh
+set_debug
 setup_owncloud

@@ -9,6 +9,9 @@ services:
       - redis
     environment:
       DEBUG: "true"
+      DB_OWNCLOUD_DB: "ownclouddb"
+      DB_OWNCLOUD_USER: "ownclouddb"
+      DB_OWNCLOUD_PASSWORD: "ownclouddb"
     volumes:
       - ${ROOT_DIR}/html:/var/www/html
       - ${ROOT_DIR}/data:/data

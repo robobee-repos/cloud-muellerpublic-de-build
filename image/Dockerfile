@@ -1,4 +1,4 @@
-FROM erwin82/owncloud:v10.0.3-fpm-r1-1
+FROM erwin82/owncloud:v10.0.3-fpm-r2-1
 
 LABEL maintainer "Erwin Mueller <erwin.mueller@deventm.com>"
 
@@ -15,7 +15,7 @@ RUN set -x \
 
 USER www-data
 
-WORKDIR $WEB_ROOT
+WORKDIR ${WEB_ROOT}
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
