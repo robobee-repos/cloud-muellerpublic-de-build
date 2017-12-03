@@ -18,12 +18,12 @@ function create_config() {
   ),
   'datadirectory' => '/data/data',
   'overwrite.cli.url' => 'https://cloud.muellerpublic.de',
-  'dbtype' => 'mysql',
-  'dbname' => '${DB_OWNCLOUD_DB}',
-  'dbhost' => 'db:3306',
+  'dbtype' => 'pgsql',
+  'dbname' => '${NEXTCLOUD_DB_DATABASE}',
+  'dbhost' => '${NEXTCLOUD_DB_HOST}:${NEXTCLOUD_DB_PORT}',
   'dbtableprefix' => 'oc_',
-  'dbuser' => '${DB_OWNCLOUD_USER}',
-  'dbpassword' => '${DB_OWNCLOUD_PASSWORD}',
+  'dbuser' => '${NEXTCLOUD_DB_USER}',
+  'dbpassword' => '${NEXTCLOUD_DB_PASSWORD}',
   'logtimezone' => 'UTC',
   'installed' => false,
   'redis' => 
@@ -31,9 +31,24 @@ function create_config() {
     'host' => 'redis',
     'port' => '6379',
   ),
-  'memcache.local' => '\\OC\\Memcache\\Redis',
+  'memcache.local' => '\\OC\\Memcache\\APCu',
   'memcache.locking' => '\\OC\\Memcache\\Redis',
   'memcache.distributed' => '\\OC\\Memcache\\Redis',
+  'apps_paths' => 
+  array (
+    0 => 
+    array (
+      'path' => '/var/www/html/apps',
+      'url' => '/apps',
+      'writable' => false,
+    ),
+    1 => 
+    array (
+      'path' => '/var/www/html/custom_apps',
+      'url' => '/custom_apps',
+      'writable' => true,
+    ),
+  ),
 );
 EOF
 }

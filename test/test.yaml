@@ -2,39 +2,41 @@ version: '3.1'
 
 services:
 
-  owncloud:
+  cloud-muellerpublic-de:
     image: erwin82/cloud-muellerpublic-de:latest
     links:
       - db
       - redis
     environment:
       DEBUG: "true"
-      DB_OWNCLOUD_DB: "ownclouddb"
-      DB_OWNCLOUD_USER: "ownclouddb"
-      DB_OWNCLOUD_PASSWORD: "ownclouddb"
+      NEXTCLOUD_DB_DATABASE: "nextclouddb"
+      NEXTCLOUD_DB_HOST: "db"
+      NEXTCLOUD_DB_PORT: "5432"
+      NEXTCLOUD_DB_USER: "nextclouddb"
+      NEXTCLOUD_DB_PASSWORD: "nextclouddb"
     volumes:
-      - ${ROOT_DIR}/html:/var/www/html
-      - ${ROOT_DIR}/data:/data
+      - "./root/html:/var/www/html"
+      - "./root/data:/data"
 
   redis:
-    image: erwin82/redis-unpriv:latest
+    image: robobeerun/redis:latest
 
   db:
-    image: bitnami/mariadb:latest
+    image: centos/postgresql-96-centos7:9.6
     environment:
-      ALLOW_EMPTY_PASSWORD: "yes"
-      MARIADB_USER: "ownclouddb"
-      MARIADB_PASSWORD: "ownclouddb"
-      MARIADB_DATABASE: "ownclouddb"
+      POSTGRESQL_ADMIN_PASSWORD: "admin"
+      POSTGRESQL_USER: "nextclouddb"
+      POSTGRESQL_PASSWORD: "nextclouddb"
+      POSTGRESQL_DATABASE: "nextclouddb"
     volumes:
-      - ${ROOT_DIR}/bitnami/mariadb:/bitnami/mariadb
+      - "./root/db:/pgdata"
 
   nginx:
-    image: erwin82/nginx:latest
+    image: robobeerun/nginx:latest
     ports:
       - 8080:8080
     links:
-      - owncloud
+      - "cloud-muellerpublic-de:nextcloud"
     volumes:
-      - ${NGINX_CONF_DIR}:/nginx-in
-      - ${ROOT_DIR}/html:/var/www/html
+      - "./nginx-in:/nginx-in"
+      - "./root/html:/var/www/html"

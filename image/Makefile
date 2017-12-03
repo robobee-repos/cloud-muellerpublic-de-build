@@ -1,6 +1,6 @@
 REPOSITORY := erwin82
 NAME := cloud-muellerpublic-de
-VERSION ?= v10.0.3-fpm-r2-1
+VERSION ?= nextcloud-v12.0.3-fpm-r1
 
 build: _build ##@targets Builds the docker image.
 

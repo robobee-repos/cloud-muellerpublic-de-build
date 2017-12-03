@@ -12,7 +12,6 @@ function setup_owncloud() {
   if ! grep "'installed' => true," "config/config.php"; then
     return
   fi
-  php occ market:install customgroups richdocuments files_texteditor files_pdfviewer gallery
   php occ app:enable encryption
   php occ encryption:enable
 }

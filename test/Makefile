@@ -1,28 +1,29 @@
 include ../utils/Makefile.help
 include ../utils/Makefile.functions
 
-export NAME := owncloud
+export NAME := nextcloud
 export ROOT_DIR := $(shell realpath ./root)
 export NGINX_CONF_DIR := $(shell realpath ./nginx-in)
 
-test: setup ##@targets Starts docker compose.
-	docker-compose -p ${NAME} -f test.yaml up
 .PHONY: test
+test: setup ##@targets Starts docker compose.
+	docker-compose -p $(NAME) -f test.yaml up
 
-clean: rm ##@targets Removes docker containers and created files.
-	sudo rm -rf $(ROOT_DIR)
-.PHONY: clean
+.PHONY: stop
+stop: ##@targets Stops test containers.
+	docker-compose -p $(NAME) -f test.yaml stop
 
-rm: ##@targets Removes docker containers.
-	docker-compose -p ${NAME} -f test.yaml stop
-	docker-compose -p ${NAME} -f test.yaml rm -f
 .PHONY: rm
+rm: stop ##@targets Removes test containers.
+	docker-compose -p $(NAME) -f test.yaml rm -f
 
-setup:
-	mkdir -p $(ROOT_DIR)/html
-	mkdir -p $(ROOT_DIR)/data
-	mkdir -p $(ROOT_DIR)/bitnami/mariadb
-	sudo chmod o+rwX $(ROOT_DIR)/html
-	sudo chmod o+rwX $(ROOT_DIR)/data
-	sudo chmod o+rwX $(ROOT_DIR)/bitnami/mariadb
+.PHONY: clean
+clean: rm ##@targets Removes docker containers and created files.
+	sudo rm -rf root
+
 .PHONY: setup
+setup:
+	for p in html db data; do \
+	mkdir -p root/$$p; \
+	chmod o+rwX root/$$p ; \
+	done
