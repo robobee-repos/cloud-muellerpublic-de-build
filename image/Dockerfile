@@ -1,4 +1,4 @@
-FROM robobeerun/nextcloud:v12.0.3-fpm-r1
+FROM robobeerun/nextcloud:v12.0.3-fpm-r2
 
 LABEL maintainer "Erwin Mueller <erwin.mueller@deventm.com>"
 

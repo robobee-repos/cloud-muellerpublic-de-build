@@ -5,12 +5,12 @@ services:
   cloud-muellerpublic-de:
     image: erwin82/cloud-muellerpublic-de:latest
     links:
-      - db
+      - "db:postgres"
       - redis
     environment:
       DEBUG: "true"
       NEXTCLOUD_DB_DATABASE: "nextclouddb"
-      NEXTCLOUD_DB_HOST: "db"
+      NEXTCLOUD_DB_HOST: "postgres"
       NEXTCLOUD_DB_PORT: "5432"
       NEXTCLOUD_DB_USER: "nextclouddb"
       NEXTCLOUD_DB_PASSWORD: "nextclouddb"
@@ -29,7 +29,7 @@ services:
       POSTGRESQL_PASSWORD: "nextclouddb"
       POSTGRESQL_DATABASE: "nextclouddb"
     volumes:
-      - "./root/db:/pgdata"
+      - "./root/db:/var/lib/pgsql/data"
 
   nginx:
     image: robobeerun/nginx:latest
